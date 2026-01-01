@@ -1,6 +1,7 @@
 package com.tachnique.app.quiz_ui.modules.admin;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.details.Details;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -19,48 +20,48 @@ import java.util.stream.IntStream;
 
 public class QuestionEditor extends Details {
 
-    private final TextArea questionField = new TextArea("Question");
-    private final ComboBox<String> typeCombo = new ComboBox<>("Question Type");
-    private final VerticalLayout dynamicArea = new VerticalLayout();
+    public final TextArea questionField = new TextArea("Question");
+    public final ComboBox<String> typeCombo = new ComboBox<>("Question Type");
+    public final VerticalLayout dynamicArea = new VerticalLayout();
 
     // MCQ
-    private final List<TextField> mcqOptions = Arrays.asList(
+    public final List<TextField> mcqOptions = Arrays.asList(
             new TextField("Option 1"),
             new TextField("Option 2"),
             new TextField("Option 3"),
             new TextField("Option 4")
     );
-    private final RadioButtonGroup<Integer> mcqCorrect = new RadioButtonGroup<>();
+    public final RadioButtonGroup<Integer> mcqCorrect = new RadioButtonGroup<>();
 
     // TRUE_FALSE
-    private final RadioButtonGroup<Boolean> tfGroup = new RadioButtonGroup<>();
+    public final RadioButtonGroup<Boolean> tfGroup = new RadioButtonGroup<>();
 
     // TEXT
-    private final TextField textAnswer = new TextField("Answer");
+    public final TextField textAnswer = new TextField("Answer");
 
     public QuestionEditor() {
         super();
         setSummaryText("Question");
         setOpened(false);
 
-        questionField.setWidthFull();
+        questionField.setWidth("100%");
         questionField.setRequiredIndicatorVisible(true);
 
         typeCombo.setItems("MCQ", "TRUE_FALSE", "TEXT");
-        typeCombo.setWidthFull();
+        typeCombo.setWidth(50, Unit.PERCENTAGE);
         typeCombo.setRequiredIndicatorVisible(true);
         typeCombo.addValueChangeListener(e -> renderDynamicArea());
 
         VerticalLayout content = new VerticalLayout(questionField, typeCombo, dynamicArea);
         content.setPadding(false);
         content.setSpacing(false);
-        content.setWidthFull();
+        content.setWidth("100%");
         setContent(content);
 
         renderDynamicArea();
     }
 
-    private void renderDynamicArea() {
+    public void renderDynamicArea() {
         dynamicArea.removeAll();
         String type = typeCombo.getValue();
         if (type == null) {
@@ -105,7 +106,7 @@ public class QuestionEditor extends Details {
     }
 
     private void renderText() {
-        textAnswer.setWidthFull();
+        textAnswer.setWidth("100%");
         textAnswer.setRequiredIndicatorVisible(true);
         dynamicArea.add(textAnswer);
     }
