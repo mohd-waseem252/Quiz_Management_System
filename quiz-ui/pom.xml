@@ -21,6 +21,12 @@
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>com.tachnique.app</groupId>
+			<artifactId>quiz-service-api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
         <!-- JAX-RS Client (for calling backend) -->
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
