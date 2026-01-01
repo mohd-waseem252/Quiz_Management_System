@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: quiz-ui
+  servlet:
+    context-path: /quiz-ui
+
+server:
+  port: 8081
+
+#vaadin:
+#  launch-browser: true
+
+webservice:
+  url:
+    quiz: http://localhost:8080/quiz-ws
+
+logging:
+  level:
+    root: INFO
+    com.tachnique: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security: INFO
+    com.vaadin.flow.server: INFO
