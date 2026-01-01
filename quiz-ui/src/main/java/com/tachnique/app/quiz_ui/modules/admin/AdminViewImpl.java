@@ -12,18 +12,24 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.router.RouteAlias;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
+import com.vaadin.flow.server.VaadinSession;
+import com.tachnique.app.quiz_ui.layout.MainLayout;
 
-@Route(value = "admin")
+@Route(value = "admin", layout = MainLayout.class)
 @PageTitle("Admin Panel")
-public class AdminViewImpl extends VerticalLayout implements AdminView {
+public class AdminViewImpl extends VerticalLayout implements AdminView, BeforeEnterObserver {
 
     private AdminPresenter presenter;
     private final Grid<QuizDto> quizGrid = new Grid<>();
@@ -271,5 +277,13 @@ public class AdminViewImpl extends VerticalLayout implements AdminView {
     @Override
     public void setPresenter(AdminPresenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void beforeEnter(BeforeEnterEvent event) {
+        var user = (com.tachnique.app.dto.UserDto) VaadinSession.getCurrent().getAttribute("user");
+        if (user == null || user.getRole() == null || !"ADMIN".equalsIgnoreCase(user.getRole())) {
+            event.forwardTo("login");
+        }
     }
 }

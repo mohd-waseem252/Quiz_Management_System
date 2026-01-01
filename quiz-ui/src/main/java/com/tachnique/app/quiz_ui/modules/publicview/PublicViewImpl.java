@@ -18,18 +18,23 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.tachnique.app.quiz_ui.layout.MainLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.server.VaadinSession;
 
-@Route(value = "quiz")
+@Route(value = "quiz", layout = MainLayout.class)
 @PageTitle("Attempt Quiz")
-public class PublicViewImpl extends VerticalLayout implements PublicView {
+public class PublicViewImpl extends VerticalLayout implements PublicView, BeforeEnterObserver {
 
     private PublicPresenter presenter;
     private final Grid<QuizDto> quizGrid = new Grid<>();
@@ -221,7 +226,12 @@ public class PublicViewImpl extends VerticalLayout implements PublicView {
     public void setPresenter(PublicPresenter presenter) {
         this.presenter = presenter;
     }
+
+    @Override
+    public void beforeEnter(BeforeEnterEvent event) {
+        var user = (com.tachnique.app.dto.UserDto) VaadinSession.getCurrent().getAttribute("user");
+        if (user == null) {
+            event.forwardTo("login");
+        }
+    }
 }
-
-
-
