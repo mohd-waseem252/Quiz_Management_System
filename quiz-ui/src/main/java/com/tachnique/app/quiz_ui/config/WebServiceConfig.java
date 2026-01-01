@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.tachnique.app.service.QuizService;
+import com.tachnique.app.service.UserService;
 
 @Configuration
 public class WebServiceConfig {
@@ -28,5 +29,11 @@ public class WebServiceConfig {
     public QuizService quizService(Client jerseyClient) {
         WebTarget target = jerseyClient.target(quizWSUrl);
         return WebResourceFactory.newResource(QuizService.class, target);
+    }
+
+    @Bean
+    public UserService userService(Client jerseyClient) {
+        WebTarget target = jerseyClient.target(quizWSUrl);
+        return WebResourceFactory.newResource(UserService.class, target);
     }
 }

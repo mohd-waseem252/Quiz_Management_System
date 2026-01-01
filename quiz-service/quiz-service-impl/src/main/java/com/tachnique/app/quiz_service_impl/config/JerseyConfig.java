@@ -5,6 +5,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Configuration;
 
 import com.tachnique.app.quiz_service_impl.serviceImpl.QuizServiceImpl;
+import com.tachnique.app.quiz_service_impl.serviceImpl.UserServiceImpl;
 
 @Configuration
 public class JerseyConfig extends ResourceConfig {
@@ -13,5 +14,6 @@ public class JerseyConfig extends ResourceConfig {
 //        packages("com.tachnique.app.quiz_service_impl.resource");
         register(JacksonFeature.class);
         register(QuizServiceImpl.class);
+        register(UserServiceImpl.class);
     }
 }
